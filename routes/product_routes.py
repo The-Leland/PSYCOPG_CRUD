@@ -2,9 +2,6 @@
 
 
 from flask import Blueprint
-from db import get_connection
-
-
 from controllers import product_controller as controller
 
 product = Blueprint('product', __name__)
@@ -36,3 +33,16 @@ def update_product_active_route(product_id):
 @product.route('/product/<product_id>', methods=['DELETE'])
 def delete_product_route(product_id):
     return controller.delete_product(product_id)
+
+@product.route('/product/company/<company_id>', methods=['GET'])
+def get_products_by_company_route(company_id):
+    return controller.get_products_by_company(company_id)
+
+@product.route('/products/details', methods=['GET'])
+def get_all_products_with_details_route():
+    return controller.get_all_products_with_details()
+
+@product.route('/product/details/<product_id>', methods=['GET'])
+def get_product_details_route(product_id):
+    return controller.get_product_details(product_id)
+

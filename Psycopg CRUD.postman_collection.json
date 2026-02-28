@@ -1,0 +1,158 @@
+{
+  "info": {
+    "_postman_id": "df8d0271-5205-4f57-9dd8-9138dea1abcc",
+    "name": "Psycopg CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47793727"
+  },
+  "item": [
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"company_id\": \"PUT_REAL_UUID_HERE\",\r\n  \"company_name\": \"Wayne Enterprises\",\r\n  \"description\": \"A high‑precision, razor‑sharp throwing weapon used by Batman.\",\r\n  \"price\": 299.99,\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8086/product",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "product"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"company_id\": \"3f2b8c8e-1a23-4bcd-9e8f-123456789abc\",\r\n  \"company_name\": \"Wayne Enterprises\",\r\n  \"description\": \"Autonomous micro-drone equipped with silent propulsion and thermal imaging.\",\r\n  \"price\": 2499.99,\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8086/product",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "product"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"message\": \"warranty delete\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://10.10.2.22:8086/warranty/76454531-2101-401f-baa6-2c2d5b7d9a50",
+              "protocol": "http",
+              "host": [
+                "10",
+                "10",
+                "2",
+                "22"
+              ],
+              "port": "8086",
+              "path": [
+                "warranty",
+                "76454531-2101-401f-baa6-2c2d5b7d9a50"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Warranties",
+      "item": []
+    },
+    {
+      "name": "Xref",
+      "item": [
+        {
+          "name": "New Request",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"product_id\": \"0d899ace-aab1-4d73-b0a0-9654f5941198\",\r\n  \"category_id\": 1\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://10.10.2.22:8086/xref/0d899ace-aab1-4d73-b0a0-9654f5941198/1",
+              "protocol": "http",
+              "host": [
+                "10",
+                "10",
+                "2",
+                "22"
+              ],
+              "port": "8086",
+              "path": [
+                "xref",
+                "0d899ace-aab1-4d73-b0a0-9654f5941198",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

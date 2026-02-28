@@ -1,25 +1,6 @@
 
 
 
-# product_records = [
-#     {
-#         "product_id": "1",
-#         "product_name": "Hasbro Gaming Clue Game",
-#         "description": "One murder... 6 suspects...",
-#         "price": 9.95,
-#         "active": True
-#     },
-#     {
-#         "product_id": "2",
-#         "product_name": "Monopoly Board Game The Classic Edition, 2-8 players",
-#         "description": "Relive the Monopoly experiences...",
-#         "price": 35.50,
-#         "active": True
-#     }
-# ]
-
-
-
 import os
 import psycopg
 from dotenv import load_dotenv
@@ -46,14 +27,15 @@ def get_connection():
 def init_db():
     with get_connection() as conn:
         with conn.cursor() as cur:
-            # Enable UUID generation
             cur.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto;")
 
             cur.execute(
                 """
                 CREATE TABLE IF NOT EXISTS companies (
                     company_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                    company_name VARCHAR NOT NULL UNIQUE
+                    company_name VARCHAR(255) NOT NULL UNIQUE,
+                    description TEXT,
+                    active BOOLEAN DEFAULT TRUE
                 );
                 """
             )
@@ -61,8 +43,9 @@ def init_db():
             cur.execute(
                 """
                 CREATE TABLE IF NOT EXISTS categories (
-                    category_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                    category_name VARCHAR NOT NULL UNIQUE
+                    category_id SERIAL PRIMARY KEY,
+                    category_name VARCHAR(255) NOT NULL UNIQUE,
+                    active BOOLEAN DEFAULT TRUE
                 );
                 """
             )
@@ -71,11 +54,21 @@ def init_db():
                 """
                 CREATE TABLE IF NOT EXISTS products (
                     product_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                    company_id UUID REFERENCES companies(company_id),
-                    company_name VARCHAR NOT NULL UNIQUE,
-                    price INTEGER,
-                    description VARCHAR,
+                    company_id UUID NOT NULL REFERENCES companies(company_id) ON DELETE CASCADE,
+                    company_name VARCHAR(255) NOT NULL,
+                    description TEXT,
+                    price NUMERIC(10,2),
                     active BOOLEAN DEFAULT TRUE
+);
+                """
+            )
+
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS warranties (
+                    warranty_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    product_id UUID NOT NULL REFERENCES products(product_id) ON DELETE CASCADE,
+                    warranty_months INTEGER NOT NULL
                 );
                 """
             )
@@ -83,11 +76,14 @@ def init_db():
             cur.execute(
                 """
                 CREATE TABLE IF NOT EXISTS productscategoriesxref (
-                    product_id UUID REFERENCES products(product_id),
-                    category_id UUID REFERENCES categories(category_id),
+                    product_id UUID NOT NULL REFERENCES products(product_id) ON DELETE CASCADE,
+                    category_id INTEGER NOT NULL REFERENCES categories(category_id) ON DELETE CASCADE,
                     PRIMARY KEY (product_id, category_id)
                 );
                 """
             )
 
         conn.commit()
+
+
+        
